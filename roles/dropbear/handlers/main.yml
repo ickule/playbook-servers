@@ -1,0 +1,4 @@
+---
+- name: Rebuild initramfs # noqa: no-changed-when
+  become: true
+  ansible.builtin.command: update-initramfs -u

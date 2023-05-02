@@ -1,0 +1,41 @@
+# {{ ansible_managed }}
+
+# Disable greeting
+set -g fish_greeting
+
+# Environemnt variables
+set -gx {{ env_vars | join('\nset -gx ') }}
+
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+
+    # Abbreviations
+    abbr -a ls "ls -lah"
+    abbr -a mkdir "mkdir -p"
+    abbr -a cp "cp -iv"
+    abbr -a mv "mv -iv"
+    abbr -a rm "rm -iv"
+
+    # Functions (and aliases)
+
+    function vi --wraps vi --description 'alias vi="vim"'
+        vim $argv
+    end
+
+    function sau --wraps apt --description 'alias sau="sudo apt update"'
+        sudo apt update $argv
+    end
+
+    function sai --wraps apt --description 'alias sai="sudo apt install"'
+        sudo apt install $argv
+    end
+
+    function sap --wraps apt --description 'alias sap="sudo apt purge"'
+        sudo apt purge $argv
+    end
+
+    function safu --wraps apt --description 'alias safu="sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fisher update"'
+        sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fisher update
+    end
+
+end

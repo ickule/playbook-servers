@@ -1,0 +1,73 @@
+---
+- name: Add support for https repos
+  become: true
+  ansible.builtin.apt:
+    name: apt-transport-https
+
+- name: Copy sources.list file
+  become: true
+  ansible.builtin.template:
+    src: sources.list.j2
+    dest: /etc/apt/sources.list
+    mode: "0644"
+
+- name: Update system fully
+  become: true
+  ansible.builtin.apt:
+    upgrade: full
+    update_cache: true
+    autoclean: true
+    autoremove: true
+  notify: Reboot if required
+
+- name: Check if reboot is needed
+  become: true
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required
+
+- name: Install core system apps
+  become: true
+  ansible.builtin.apt:
+    name: "{{ system_apps }}"
+
+- name: Disable part of ssh login messages
+  become: true
+  ansible.builtin.copy:
+    src: motd
+    dest: /etc/motd
+    mode: "0644"
+
+- name: Disable cron e-mail notifications
+  become: true
+  when: inventory_hostname in groups['servers']
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Disable suspend when lid is closed
+  when: inventory_hostname in groups['laptops']
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/logind.conf
+    regexp: ^HandleLidSwitch
+    line: HandleLidSwitch=ignore
+
+- name: Install tlp
+  when: inventory_hostname in groups['laptops']
+  become: true
+  ansible.builtin.apt:
+    name:
+      - tlp
+      - tlp-rdw
+    state: present
+
+- name: Set hostname
+  become: true
+  when: inventory_hostname not in groups['vm']
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers

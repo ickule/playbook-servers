@@ -1,0 +1,14 @@
+---
+- name: Copy pythonrc
+  become: true
+  ansible.builtin.copy:
+    src: pythonrc
+    dest: /etc/python3/pythonrc
+    mode: "0644"
+
+- name: Install python modules
+  become: true
+  ansible.builtin.apt:
+    name:
+      - python3-venv # Add venv support for Python
+      - python-is-python3 # Symlink python to python3

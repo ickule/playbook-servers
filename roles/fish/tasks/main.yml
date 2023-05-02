@@ -1,0 +1,44 @@
+---
+- name: Install fish packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - fish
+    state: present
+    default_release: "{{ ansible_distribution_release }}-backports"
+
+- name: Create all fish related folders
+  ansible.builtin.file:
+    path: "{{ xdg_config_home }}/fish"
+    state: directory
+    mode: "0755"
+
+- name: Copy fish user config files
+  ansible.builtin.template:
+    src: config.fish.j2
+    dest: "{{ xdg_config_home }}/fish/config.fish"
+    mode: "0644"
+
+- name: Change the current user shell to fish
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/fish
+
+- name: Download fisher script
+  ansible.builtin.uri:
+    url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+    return_content: true
+  register: fisher
+
+- name: Install fisher # noqa: no-changed-when
+  ansible.builtin.shell:
+    cmd: source -- && fisher install jorgebucaran/fisher
+    stdin: "{{ fisher.content }}"
+    executable: /usr/bin/fish
+
+- name: Install fish modules # noqa: no-changed-when
+  ansible.builtin.shell: fisher install {{ item }}
+  args:
+    executable: /usr/bin/fish
+  with_items: "{{ fish_modules }}"

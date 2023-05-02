@@ -1,0 +1,8 @@
+### Ansible files
+vault.yml
+
+### VSCode
+.vscode/
+
+### Python venv
+.venv/

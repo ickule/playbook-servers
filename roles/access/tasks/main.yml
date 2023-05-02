@@ -1,0 +1,73 @@
+---
+- name: Install hostapd and rfkill
+  become: true
+  ansible.builtin.apt:
+    name:
+      - hostapd
+      - rfkill
+
+- name: Enable and unmask global hostap.conf service
+  become: true
+  ansible.builtin.systemd:
+    name: hostapd
+    enabled: true
+    masked: false
+
+- name: Create netdev file
+  become: true
+  ansible.builtin.blockinfile:
+    path: /etc/systemd/network/bridge-{{ bridge_interface }}.netdev
+    insertafter: EOF
+    block: |
+      [NetDev]
+      Name={{ bridge_interface }}
+      Kind=bridge
+    create: true
+    mode: "0644"
+
+- name: Create network file
+  become: true
+  ansible.builtin.blockinfile:
+    path: /etc/systemd/network/{{ bridge_interface }}-member-{{ ethernet_interface }}.network
+    insertafter: EOF
+    block: |
+      [Match]
+      Name={{ ethernet_interface }}
+      [Network]
+      Bridge={{ bridge_interface }}
+    create: true
+    mode: "0644"
+
+- name: Enable global systemd-networkd service
+  become: true
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: true
+    masked: false
+
+- name: Update dhcp.conf
+  become: true
+  ansible.builtin.blockinfile:
+    path: /etc/dhcpcd.conf
+    insertafter: EOF
+    block: |
+      denyinterfaces {{ wireless.interface }} {{ ethernet_interface }}
+      interface {{ bridge_interface }}
+    create: true
+    mode: "0644"
+
+- name: Unblock wifi # noqa: no-changed-when
+  become: true
+  ansible.builtin.command: rfkill unblock wlan
+  run_once: true
+
+- name: Copy hostapd.conf
+  become: true
+  ansible.builtin.template:
+    src: hostapd.conf.j2
+    dest: /etc/hostapd/hostapd.conf
+    mode: "0644"
+  notify: Reboot
+
+- name: Allow all handlers to run
+  ansible.builtin.meta: flush_handlers
