@@ -10,37 +10,30 @@ xdg_bin_home: $HOME/.local/bin
 editor: vim
 
 env_vars:
-  - PATH {{ xdg_bin_home }} $PATH
-  - XDG_CONFIG_HOME {{ xdg_config_home }}
-  - XDG_CACHE_HOME {{ xdg_cache_home }}
-  - XDG_DATA_HOME {{ xdg_data_home }}
-  - XDG_STATE_HOME {{ xdg_state_home }}
-  # - HISTFILE="${XDG_STATE_HOME}/zsh/history"
-  # - HISTSIZE="10000"
-  # - SAVEHIST="10000"
-  # - HISTDUP="erase"
-  - EDITOR {{ editor }}
-  # Suggested by xdg-ninja to keep $HOME clean
-  - PYTHONSTARTUP /etc/python/pythonrc
-  - ANSIBLE_HOME $XDG_DATA_HOME/ansible
-  # - ANDROID_HOME="${XDG_DATA_HOME}/android"
-  # - CARGO_HOME="${XDG_DATA_HOME}/cargo"
-  # - GNUPGHOME="${XDG_DATA_HOME}/gnupg"
-  # - GOPATH="${XDG_DATA_HOME}/go"
-  # - GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-  # - TEXMFVAR="$XDG_CACHE_HOME/texlive/texmf-var"
-  # - WINEPREFIX="${XDG_DATA_HOME}/wine"
-  # - NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+  global:
+    - name: XDG_CONFIG_HOME
+      default: "{{ xdg_config_home }}"
+      override: '""'
+    - name: XDG_CACHE_HOME
+      default: "{{ xdg_cache_home }}"
+      override: '""'
+    - name: XDG_DATA_HOME
+      default: "{{ xdg_data_home }}"
+      override: '""'
+    - name: XDG_STATE_HOME
+      default: "{{ xdg_state_home }}"
+      override: '""'
+    - name: EDITOR
+      default: "{{ editor }}"
+      override: '""'
+  user:
+    - PATH {{ xdg_bin_home }} $PATH
 
 ### System
 
 system_apps:
   - vim
   - curl
-
-### ZSH
-
-zdotdir: "{{ xdg_config_home }}/zsh"
 
 ### Fish modules
 
@@ -52,9 +45,3 @@ fish_modules:
 
 debian_package_url: https://deb.debian.org/debian
 debian_security_url: https://security.debian.org/debian-security
-
-### Docker
-
-docker:
-  apt_repo_url: https://download.docker.com/linux/debian
-  apt_key_url: https://download.docker.com/linux/debian/gpg

@@ -4,7 +4,19 @@
 set -g fish_greeting
 
 # Environemnt variables
-set -gx {{ env_vars | join('\nset -gx ') }}
+{% if inventory_hostname in groups['vm'] %}
+{% for var in env_vars.global %}
+set -gx {{ var.name }} {{ var.default }}
+{% endfor %}
+{% endif %}
+{% for var in env_vars.user %}
+set -gx {{ var }}
+{% endfor %}
+{% if host_vars is defined %}
+{% for var in host_vars %}
+set -gx {{ var }}
+{% endfor %}
+{% endif %}
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
@@ -17,6 +29,11 @@ if status is-interactive
     abbr -a rm "rm -iv"
 
     # Functions (and aliases)
+
+    function mkcd
+        mkdir -p $argv
+        and cp $argv
+    end
 
     function vi --wraps vi --description 'alias vi="vim"'
         vim $argv
@@ -34,8 +51,8 @@ if status is-interactive
         sudo apt purge $argv
     end
 
-    function safu --wraps apt --description 'alias safu="sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fisher update"'
-        sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fisher update
+    function safu --wraps apt --description 'alias safu="sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fish_update_completions && fisher update"'
+        sudo apt update && sudo apt full-upgrade && sudo apt autopurge && fish_update_completions && fisher update
     end
 
 end

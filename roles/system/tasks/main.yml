@@ -26,6 +26,13 @@
     path: /var/run/reboot-required
   register: reboot_required
 
+- name: Copy pam_env file for global variables
+  become: true
+  ansible.builtin.template:
+    src: pam_env.conf.j2
+    dest: /etc/security/pam_env.conf
+    mode: "0644"
+
 - name: Install core system apps
   become: true
   ansible.builtin.apt:
