@@ -12,11 +12,6 @@
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: unatended_upgrades
 
-- name: Local Host
-  hosts: localhost
-  roles:
-    - role: python
-
 - name: Pi sbc server
   hosts: pi
   roles:

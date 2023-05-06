@@ -31,6 +31,12 @@
   ansible.builtin.apt:
     name: "{{ system_apps }}"
 
+- name: Install specific host apps
+  when: host_packages is defined
+  become: true
+  ansible.builtin.apt:
+    name: "{{ host_packages }}"
+
 - name: Disable part of ssh login messages
   become: true
   ansible.builtin.copy:
