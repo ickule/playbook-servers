@@ -20,6 +20,12 @@
     autoremove: true
   notify: Reboot if required
 
+- name: Install firmware packages
+  when: firmware_packages is defined
+  become: true
+  ansible.builtin.apt:
+    name: "{{ firmware_packages }}"
+
 - name: Check if reboot is needed
   become: true
   ansible.builtin.stat:
