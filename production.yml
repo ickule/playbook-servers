@@ -7,11 +7,8 @@ home:
     servers:
       hosts:
         pi:
-        aspire:
 
     laptops:
-      hosts:
-        aspire:
     desktops:
     vm:
       hosts:

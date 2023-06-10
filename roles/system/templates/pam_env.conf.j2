@@ -1,5 +1,0 @@
-# {{ ansible_managed }}
-
-{% for var in env_vars.global %}
-{{ var.name }}  DEFAULT={{ var.default | replace('$HOME', '@{HOME}') }}  OVERRIDE={{ var.override | replace('$HOME', '@{HOME}') }}
-{% endfor %}

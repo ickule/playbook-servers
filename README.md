@@ -34,11 +34,10 @@ change this -> %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 
 ### 1.3 Install Ansible
 
-
 Install required python packages:
 
 ```sh
-sudo apt install python3-venv
+sudo apt install python-is-python3 python3-venv
 ```
 
 Create a virtual environment:
@@ -47,23 +46,23 @@ Create a virtual environment:
 python -m venv .venv
 ```
 
-Install required python modules:
-
-```sh
-python -m pip install -U -r requirements.txt
-```
-
 Activate your venv
 
 ```sh
 source .venv/bin/activate (or activate.fish or activate.csh)
 ```
 
+Install required python modules:
+
+```sh
+python -m pip install -U -r requirements.txt
+```
+
 If you use VSCode, add your configuration to your VSCode folder or worksace settings
 
 ```json
 "settings": {
-		"ansible.python.activationScript": "./.venv/bin/activate"
+    "ansible.python.activationScript": "./.venv/bin/activate"
 }
 ```
 
@@ -96,3 +95,5 @@ ansible-playbook home.yml -i production.yml
 ```
 
 ## Credits/Sources
+
+[Fish theme](https://github.com/IlanCosman/tide)

@@ -46,6 +46,8 @@ ethernet_interface: eth0
 
 bridge_interface: br0
 
-### ZFS
+### Samba
 
-kernel_headers: raspberrypi-kernel-headers
+samba:
+  public:
+    share: /media/root/public/nas

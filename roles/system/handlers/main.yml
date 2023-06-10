@@ -2,4 +2,8 @@
 - name: Reboot if required
   become: true
   ansible.builtin.reboot:
-  when: reboot_required.stat.exists and inventory_hostname in groups.servers
+  when: system_reboot_required.stat.exists and inventory_hostname in groups.servers
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:

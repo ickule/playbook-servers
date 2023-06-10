@@ -1,25 +1,19 @@
 ---
-- name: Configure everything
+- name: Configure all hosts
   hosts: home
   roles:
     - role: system
     - role: fish
 
-- name: Configure servers
+- name: Configure servers hosts
   hosts: servers
   roles:
     - { role: geerlingguy.security, become: true }
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: unatended_upgrades
 
-- name: Pi sbc server
+- name: Configure pi server
   hosts: pi
   roles:
     - role: access
-
-- name: Aspire laptop server
-  hosts: aspire
-  roles:
-    - role: dropbear
-    - role: zfs
     - role: samba

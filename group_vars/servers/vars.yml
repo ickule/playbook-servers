@@ -18,11 +18,11 @@ msmtp_alias_default: "{{ vault_email.from }}"
 
 security_sudoers_passwordless:
   - "{{ username }}"
-security_autoupdate_enabled: false # Will handle manually
+security_autoupdate_enabled: false # Handled by a dedicated role
 
 ### Unattended upgrades
 
-autoupdate_reboot: false
+autoupdate_reboot: true
 autoupdate_mail_to: "{{ vault_email.to }}"
 autoupdate_reboot_time: 03:00
-autoupdate_mail_report: on-change # Could be "always", "on-change" or "only-on-error"
+autoupdate_mail_report: always # Could be "always", "on-change" or "only-on-error"

@@ -12,8 +12,8 @@
     path: "{{ samba.public.share }}"
     state: directory
     mode: "0777"
-    owner: root
-    group: root
+    owner: nobody
+    group: nogroup
 
 - name: Adding the configuration for the public share
   become: true
@@ -30,38 +30,38 @@
     backup: true
   notify: Restart smbd service
 
-- name: Add a user for private share
-  become: true
-  ansible.builtin.user:
-    name: "{{ samba.private.user }}"
-    shell: /usr/bin/nologin
-  notify:
-    - Reboot
-    - Add samba password to user
+# - name: Add a user for private share
+#   become: true
+#   ansible.builtin.user:
+#     name: "{{ samba.private.user }}"
+#     shell: /usr/bin/nologin
+#   notify:
+#     - Reboot
+#     - Add samba password to user
 
-- name: Create samba folder for private share
-  become: true
-  ansible.builtin.file:
-    path: "{{ samba.private.share }}"
-    state: directory
-    mode: "0755"
-    owner: "{{ samba.private.user }}"
-    group: "{{ samba.private.user }}"
+# - name: Create samba folder for private share
+#   become: true
+#   ansible.builtin.file:
+#     path: "{{ samba.private.share }}"
+#     state: directory
+#     mode: "0755"
+#     owner: "{{ samba.private.user }}"
+#     group: "{{ samba.private.user }}"
 
-- name: Adding the configuration for the private share
-  become: true
-  ansible.builtin.blockinfile:
-    marker: "# {mark} Private share"
-    path: /etc/samba/smb.conf
-    insertafter: EOF
-    block: |
-      [private]
-      path = {{ samba.private.share }}
-      valid users = {{ samba.private.user }}
-      public = no
-      writeable = yes
-    backup: true
-  notify: Restart smbd service
+# - name: Adding the configuration for the private share
+#   become: true
+#   ansible.builtin.blockinfile:
+#     marker: "# {mark} Private share"
+#     path: /etc/samba/smb.conf
+#     insertafter: EOF
+#     block: |
+#       [private]
+#       path = {{ samba.private.share }}
+#       valid users = {{ samba.private.user }}
+#       public = no
+#       writeable = yes
+#     backup: true
+#   notify: Restart smbd service
 
 - name: Enable smbd service
   become: true

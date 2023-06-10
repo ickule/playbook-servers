@@ -5,7 +5,7 @@
     name:
       - fish
     state: present
-    default_release: "{{ ansible_distribution_release }}-backports"
+    # default_release: "{{ ansible_distribution_release }}-backports"
 
 - name: Create all fish related folders
   ansible.builtin.file:
@@ -29,12 +29,12 @@
   ansible.builtin.uri:
     url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
     return_content: true
-  register: fisher
+  register: fish_fisher_script
 
 - name: Install fisher # noqa: no-changed-when
   ansible.builtin.shell:
     cmd: source -- && fisher install jorgebucaran/fisher
-    stdin: "{{ fisher.content }}"
+    stdin: "{{ fish_fisher_script.content }}"
     executable: /usr/bin/fish
 
 - name: Install fish modules # noqa: no-changed-when

@@ -3,12 +3,6 @@
 
 ansible_connection: local
 
-### Packages
-
-host_packages:
-  - python3-venv # Add venv support for Python
-  - python-is-python3 # Symlink python to python3
-
 ### Environment variables
 
 host_vars:

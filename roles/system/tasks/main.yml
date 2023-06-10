@@ -30,21 +30,26 @@
   become: true
   ansible.builtin.stat:
     path: /var/run/reboot-required
-  register: reboot_required
+  register: system_reboot_required
 
-- name: Copy pam_env file for global variables
-  become: true
-  ansible.builtin.template:
-    src: pam_env.conf.j2
-    dest: /etc/security/pam_env.conf
-    mode: "0644"
+- name: Create all XDG folders
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ xdg_bin_home }}"
+    - "{{ xdg_cache_home }}"
+    - "{{ xdg_config_home }}"
+    - "{{ xdg_data_home }}"
+    - "{{ xdg_state_home }}"
 
-- name: Install core system apps
+- name: Install core system packages
   become: true
   ansible.builtin.apt:
-    name: "{{ system_apps }}"
+    name: "{{ system_packages }}"
 
-- name: Install specific host apps
+- name: Install specific host packages
   when: host_packages is defined
   become: true
   ansible.builtin.apt:
@@ -87,6 +92,24 @@
   when: inventory_hostname not in groups['vm']
   ansible.builtin.hostname:
     name: "{{ hostname }}"
+
+- name: Adding the configuration for the public share
+  when: inventory_hostname in groups['sbc']
+  become: true
+  ansible.builtin.blockinfile:
+    marker: "# {mark} Disable all LED"
+    path: /boot/config.txt
+    insertafter: EOF
+    block: |
+      #Disable Power LED (Red)
+      dtparam=pwr_led_activelow=off
+      #Disable Activity LED (Green)
+      dtparam=act_led_trigger=none
+      dtparam=act_led_activelow=off
+      #Disable LAN LEDs
+      dtparam=eth_led0=14
+      dtparam=eth_led1=14
+  notify: Reboot
 
 - name: Allow all handlers to run
   ansible.builtin.meta: flush_handlers

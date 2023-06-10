@@ -13,5 +13,5 @@
     dest: "/etc/apt/apt.conf.d/{{ item }}"
     mode: "0644"
   with_items:
-    - 10periodic
+    - 20auto-upgrades
     - 50unattended-upgrades
