@@ -109,6 +109,8 @@
       #Disable LAN LEDs
       dtparam=eth_led0=14
       dtparam=eth_led1=14
+      #Disable bluetooth
+      dtoverlay=disable-bt
   notify: Reboot
 
 - name: Allow all handlers to run
