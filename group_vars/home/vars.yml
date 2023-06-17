@@ -8,6 +8,7 @@ xdg_state_home: $HOME/.local/state
 xdg_bin_home: $HOME/.local/bin
 
 editor: nvim
+visual: nvim
 pager: less
 
 home_vars:
@@ -16,6 +17,7 @@ home_vars:
   - XDG_DATA_HOME {{ xdg_data_home }}
   - XDG_STATE_HOME {{ xdg_state_home }}
   - XDG_BIN_HOME {{ xdg_bin_home }}
+  - VISUAL {{ visual }}
   - EDITOR {{ editor }}
   - PAGER {{ pager }}
   - ANSIBLE_HOME $XDG_CONFIG_HOME/ansible
