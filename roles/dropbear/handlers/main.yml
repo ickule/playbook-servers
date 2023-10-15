@@ -1,0 +1,6 @@
+---
+- name: Rebuild initramfs
+  become: true
+  ansible.builtin.command: update-initramfs -u
+  register: initramfs_rebuilt
+  changed_when: initramfs_rebuilt.rc != 0
