@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+# Disable greeting
+set -g fish_greeting
+
+# Environemnt variables
+{% for var in home_vars %}
+set -gx {{ var }}
+{% endfor %}
+
+# Update path
+fish_add_path {{ path | join(" ") }}

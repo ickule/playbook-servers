@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+
+function mkcd --description 'create a folder and move into it'
+    mkdir -p $argv
+    and cp $argv
+end

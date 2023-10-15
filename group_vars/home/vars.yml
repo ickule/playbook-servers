@@ -33,12 +33,6 @@ system_packages:
   - neovim
   - curl
 
-### Fish modules
-
-fish_modules:
-  - IlanCosman/tide@v5
-  - jorgebucaran/autopair.fish
-
 ### System
 
 debian_package_url: https://deb.debian.org/debian

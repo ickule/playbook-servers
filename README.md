@@ -87,5 +87,3 @@ ansible-playbook home.yml -i production.yml
 ```
 
 ## Credits/Sources
-
-[Fish theme](https://github.com/IlanCosman/tide)

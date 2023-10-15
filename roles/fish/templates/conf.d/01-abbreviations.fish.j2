@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+
+if status is-interactive
+    abbr -a ls "ls -lah"
+    abbr -a mkdir "mkdir -p"
+    abbr -a cp "cp -iv"
+    abbr -a mv "mv -iv"
+    abbr -a rm "rm -iv"
+    abbr -a sai "sudo -E apt install"
+    abbr -a sau "sudo -E apt update"
+    abbr -a sap "sudo -E apt purge"
+    abbr -a sudo "sudo -E"
+    abbr -a bye "sudo systemctl poweroff"
+end
