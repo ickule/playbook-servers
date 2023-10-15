@@ -12,8 +12,10 @@
     - { role: chriswayg.msmtp-mailer, become: true }
     - role: unatended_upgrades
 
-- name: Configure pi server
-  hosts: pi
+- name: Configure aspire server
+  hosts: aspire
   roles:
-    - role: access
+    - role: dropbear
     - role: samba
+    - role: docker
+    - role: jellyfin

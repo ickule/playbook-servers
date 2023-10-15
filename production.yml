@@ -2,17 +2,13 @@
 home:
   children:
     pc:
-      hosts:
-        localhost:
     servers:
       hosts:
-        pi:
+        aspire:
 
     laptops:
+      hosts:
+        aspire:
     desktops:
     vm:
-      hosts:
-        localhost:
     sbc:
-      hosts:
-        pi:
