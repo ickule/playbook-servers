@@ -93,7 +93,7 @@
   ansible.builtin.hostname:
     name: "{{ hostname }}"
 
-- name: Adding the configuration for the public share
+- name: Control LED on sbc
   when: inventory_hostname in groups['sbc']
   become: true
   ansible.builtin.blockinfile:
