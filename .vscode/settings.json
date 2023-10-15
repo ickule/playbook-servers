@@ -1,0 +1,4 @@
+{
+    "ansible.python.activationScript": "./.venv/bin/activate",
+    "ansible.python.interpreterPath": "./.venv/bin/python"
+}

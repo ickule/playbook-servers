@@ -58,14 +58,6 @@ Install required python modules:
 python -m pip install -U -r requirements.txt
 ```
 
-If you use VSCode, add your configuration to your VSCode folder or worksace settings
-
-```json
-"settings": {
-    "ansible.python.activationScript": "./.venv/bin/activate"
-}
-```
-
 ### 1.4 Install ansible-galaxy requirements
 
 Install the ansible requirements:
