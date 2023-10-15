@@ -56,10 +56,11 @@
     create: true
     mode: "0644"
 
-- name: Unblock wifi # noqa: no-changed-when
+- name: Unblock wifi
   become: true
   ansible.builtin.command: rfkill unblock wlan
-  run_once: true
+  register: wifi_disabled
+  changed_when: wifi_disabled.rc != 0
 
 - name: Copy hostapd.conf
   become: true

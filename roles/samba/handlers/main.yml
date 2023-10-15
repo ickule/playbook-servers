@@ -9,6 +9,12 @@
     name: smbd
     state: restarted
 
-- name: Add samba password to user # noqa: no-changed-when risky-shell-pipe
+- name: Add samba password to user
   become: true
-  ansible.builtin.shell: printf "{{ samba.private.password }}\n{{ samba.private.password }}\n" | smbpasswd -s -a {{ samba.private.user }}
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      printf "{{ samba.private.password }}\n{{ samba.private.password }}\n" | smbpasswd -s -a {{ samba.private.user }}
+  executable: /bin/bash
+  register: samba_password_added
+  changed_when: samba_password_added.rc != 0
