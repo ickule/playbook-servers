@@ -63,8 +63,8 @@
 
 - name: Disable part of ssh login messages
   become: true
-  ansible.builtin.copy:
-    src: motd
+  ansible.builtin.template:
+    src: motd.j2
     dest: /etc/motd
     mode: "0644"
 
