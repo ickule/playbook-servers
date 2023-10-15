@@ -1,4 +1,10 @@
 ---
+- name: Set hostname
+  become: true
+  when: inventory_hostname not in groups['vm']
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
 - name: Add support for https repos
   become: true
   ansible.builtin.apt:
@@ -86,12 +92,6 @@
       - tlp
       - tlp-rdw
     state: present
-
-- name: Set hostname
-  become: true
-  when: inventory_hostname not in groups['vm']
-  ansible.builtin.hostname:
-    name: "{{ hostname }}"
 
 - name: Control LED on sbc
   when: inventory_hostname in groups['sbc']
