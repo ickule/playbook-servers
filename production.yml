@@ -2,6 +2,8 @@
 home:
   children:
     pc:
+      hosts:
+        localhost:
     servers:
       hosts:
         aspire:
@@ -11,4 +13,6 @@ home:
         aspire:
     desktops:
     vm:
+      hosts:
+        localhost:
     sbc:
