@@ -20,18 +20,17 @@
     name: jellyfin
     image: jellyfin/jellyfin:latest
     pull: true
-    network_mode: host
     groups:
       - "{{ group_id.stdout }}"
+    ports:
+      - 8096:8096
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - jellyfin-config:/config
       - jellyfin-cache:/cache
     mounts:
       - type: bind
-        source: "{{ jellyfin_media_root }}/films"
-        target: "{{ jellyfin_media_root }}/films"
-      - type: bind
-        source: "{{ jellyfin_media_root }}/tv-shows"
-        target: "{{ jellyfin_media_root }}/tv-shows"
+        source: "{{ jellyfin_media_root }}"
+        target: "/data/media"
