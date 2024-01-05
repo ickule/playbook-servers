@@ -49,7 +49,7 @@ samba:
 
 ### Jellyfin
 
-jellyfin_media_root: /media/public/nas
+jellyfin_media_root: "{{ samba.public.share }}/media"
 
 ### ZFS
 
