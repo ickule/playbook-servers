@@ -2,9 +2,9 @@
 ### Ansible
 
 username: raspberry
-ip: 192.168.1.203
+ip: 192.168.1.251
 ssh:
-  key: ~/.ssh/raspberry
+  key: ~/.ssh/servers
   port: 22
 
 ansible_host: "{{ ip }}"
@@ -50,4 +50,8 @@ bridge_interface: br0
 
 samba:
   public:
-    share: /media/root/public/nas
+    share: /media/public/nas
+
+### Jellyfin
+
+jellyfin_media_root: "{{ samba.public.share }}/media"
