@@ -83,7 +83,7 @@ Check for variable staring with "vault_" in the vars files.
 Run the playbook:
 
 ```sh
-ansible-playbook home.yml -i production.yml
+ansible-playbook home.yml -i inventories/production.yml
 ```
 
 ## Credits/Sources
