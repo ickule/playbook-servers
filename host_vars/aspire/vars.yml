@@ -50,7 +50,3 @@ samba:
 ### Jellyfin
 
 jellyfin_media_root: "{{ samba.public.share }}/media"
-
-### ZFS
-
-kernel_headers: linux-headers-amd64
