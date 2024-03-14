@@ -1,5 +1,5 @@
 ---
-- name: Install unatended upgrades packages
+- name: Install unattended upgrades packages
   become: true
   ansible.builtin.apt:
     name:
