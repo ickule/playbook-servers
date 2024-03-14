@@ -1,4 +1,75 @@
 {
+    // Common
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.eol": "\n",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    // Markdown
+    "markdown.occurrencesHighlight.enabled": true,
+    "markdown.validate.enabled": true,
+    "markdown.extension.tableFormatter.normalizeIndentation": true,
+    "markdownlint.config": {
+        "MD024": {
+            "siblings_only": true
+        }
+    },
+    "markdown.extension.toc.orderedList": false,
+    "markdown.extension.toc.slugifyMode": "github",
+    "[markdown]": {
+        "editor.tabSize": 4
+    },
+    //Spelling
+    "cSpell.language": "en-GB",
+    // Python
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    // Project specific
     "ansible.python.activationScript": "./.venv/bin/activate",
-    "ansible.python.interpreterPath": "./.venv/bin/python"
+    "ansible.python.interpreterPath": "./.venv/bin/python",
+    "files.associations": {
+        "*docker-compose*": "dockercompose",
+        "*fish*": "fish",
+        "*.yml": "ansible",
+    },
+    "cSpell.words": [
+        "activelow",
+        "autoclean",
+        "autoremove",
+        "autoupdate",
+        "blockinfile",
+        "btop",
+        "btrfs",
+        "buildx",
+        "chriswayg",
+        "containerd",
+        "dropbear",
+        "Dropbrear",
+        "dtoverlay",
+        "dtparam",
+        "filetree",
+        "geerlingguy",
+        "getent",
+        "ickule",
+        "insertafter",
+        "iwlwifi",
+        "logind",
+        "MSMTP",
+        "neovim",
+        "nogroup",
+        "nologin",
+        "nvim",
+        "opendan",
+        "passwordless",
+        "pipefail",
+        "realtek",
+        "smbd",
+        "smbpasswd",
+        "startls",
+        "sytemd",
+        "vars"
+    ],
 }
