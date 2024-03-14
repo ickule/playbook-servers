@@ -17,5 +17,6 @@
   roles:
     - role: dropbear
     - role: samba
+    - role: nfs
     - role: docker
     - role: jellyfin

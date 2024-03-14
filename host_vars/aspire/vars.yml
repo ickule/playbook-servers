@@ -45,6 +45,9 @@ samba:
     user: "{{ username }}"
     password: "{{ vault_samba_password }}"
 
+nfs_share:
+  - "{{ data }}"
+
 ### Jellyfin
 
 jellyfin_media_root: "{{ samba.public.share }}/media"
