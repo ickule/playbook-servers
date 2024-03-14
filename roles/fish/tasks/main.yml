@@ -1,5 +1,5 @@
 ---
-- name: Install fish packages
+- name: Install fish shell package
   become: true
   ansible.builtin.apt:
     name:
@@ -22,11 +22,15 @@
   with_community.general.filetree: "../templates"
   when: item.state == 'file'
 
-- name: Change the current user shell to fish
+- name: Adding the configuration for the private share
   become: true
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: /usr/bin/fish
+  ansible.builtin.blockinfile:
+    marker: "# {mark} Use interactive shell"
+    path: $HOME/.bashrc
+    insertafter: EOF
+    block: |
+      fish
+    backup: true
 
 - name: Fetch starship
   ansible.builtin.uri:
@@ -35,6 +39,7 @@
   register: starship_installer
 
 - name: Run starship installer
+  become: true
   ansible.builtin.command:
     cmd: sh -s -- -y
     stdin: "{{ starship_installer.content }}"

@@ -1,11 +1,11 @@
 # {{ ansible_managed }}
 
 if status is-interactive
-    abbr -a ls "ls -lah"
-    abbr -a mkdir "mkdir -p"
-    abbr -a cp "cp -iv"
-    abbr -a mv "mv -iv"
-    abbr -a rm "rm -iv"
+    abbr -a ls "ls -l"
+    abbr -a mkdir "mkdir -vp"
+    abbr -a cp "cp -v"
+    abbr -a mv "mv -v"
+    abbr -a rm "rm -v"
     abbr -a sai "sudo -E apt install"
     abbr -a sau "sudo -E apt update"
     abbr -a sap "sudo -E apt purge"
