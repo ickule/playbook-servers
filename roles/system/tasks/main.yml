@@ -5,6 +5,12 @@
   ansible.builtin.hostname:
     name: "{{ hostname }}"
 
+- name: Set timezone
+  become: true
+  when: inventory_hostname not in groups['vm']
+  community.general.timezone:
+    name: "{{ timezone }}"
+
 - name: Add support for https repos
   become: true
   ansible.builtin.apt:
