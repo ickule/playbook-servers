@@ -37,15 +37,13 @@ dropbear:
   authorized_keys:
     - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEf5Nt/JVAhptEaxDU/5Rdf284QswbVpKOOWFf7o5RAk ickule@opendan"
 
-### Samba
+### Network Sharing
 
 samba:
-  # private:
-  #   share: /media/root/zprivate
-  #   user: ickule
-  #   password: "{{ vault_samba_password }}"
-  public:
-    share: /media/public/nas
+  private:
+    share: "{{ data }}"
+    user: "{{ username }}"
+    password: "{{ vault_samba_password }}"
 
 ### Jellyfin
 

@@ -46,12 +46,6 @@ ethernet_interface: eth0
 
 bridge_interface: br0
 
-### Samba
-
-samba:
-  public:
-    share: /media/public/nas
-
 ### Jellyfin
 
 jellyfin_media_root: "{{ samba.public.share }}/media"
